@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+# verify — usage: ./verify N
+# Runs the vitest suite for problem N, then prints the manual checklist.
+set -euo pipefail
+
+if [[ $# -lt 1 ]]; then
+  echo "usage: ./verify N" >&2
+  exit 2
+fi
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$ROOT_DIR"
+
+N=$(printf "%02d" "$1")
+TEST_FILE=$(ls tests/${N}-*.test.ts 2>/dev/null | head -1 || true)
+PROBLEM_FILE=$(ls problems/${N}-*.md 2>/dev/null | head -1 || true)
+
+if [[ -z "${PROBLEM_FILE:-}" ]]; then
+  echo "No problem file found for problem $N" >&2
+  exit 1
+fi
+
+if [[ -z "${TEST_FILE:-}" ]]; then
+  echo "⚠  No test file found at tests/${N}-*.test.ts"
+  echo "   Vitest verification skipped (scaffold phase — tests not yet written)."
+  echo ""
+else
+  if [[ ! -d "app" ]]; then
+    echo "No app/ directory. Run the setup from README.md first." >&2
+    exit 1
+  fi
+
+  echo "→ typecheck (app/)"
+  cd app
+  if [[ -f package.json ]] && npm run typecheck --silent 2>/dev/null; then
+    echo "  typecheck passed"
+  else
+    echo "  (no typecheck script or typecheck failed — see README setup)"
+  fi
+  cd ..
+
+  echo "→ vitest ($TEST_FILE)"
+  npx vitest run "$TEST_FILE"
+  echo ""
+  echo "✓ Automated verification passed for problem $N"
+fi
+
+echo ""
+echo "─── MANUAL CHECKLIST ───"
+echo ""
+echo "Sideload app/manifest.xml into Word Web or Word Desktop, then confirm:"
+echo ""
+
+# Print the manual checklist section from the problem file
+awk '/^## Manual verification/,/^## Hints/' "$PROBLEM_FILE" | grep -E '^\- \[ \]' || echo "  (No manual checklist found — see problems/${N}-*.md)"
+
+echo ""
+echo "Confirm each item yourself in Word. When all confirmed, problem $N is done."

@@ -1,0 +1,20 @@
+# macOS
+.DS_Store
+
+# Node
+node_modules/
+npm-debug.log
+.env
+.env.local
+dist/
+build/
+
+# Vite / Webpack
+.vite/
+.cache/
+
+# Office add-in dev
+app/.env.development
+app/manifest*.zip
+app/appPackage/
+.office-addin-dev-certs/
