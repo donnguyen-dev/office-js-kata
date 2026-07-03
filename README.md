@@ -61,7 +61,7 @@ That creates `office-js-kata/app/` with a working "Hello World" Word add-in, a m
 
 ```bash
 cd app
-npm install --save-dev vitest @microsoft/office-addin-mock
+npm install --save-dev vitest office-addin-mock
 ```
 
 **Sideload the add-in (first time only):**
@@ -105,7 +105,7 @@ Different from framework-kata. Office.js can't be fully automated because real W
 
 Every `verify N` does two things:
 
-1. **Runs the vitest suite** at `tests/N-{slug}.test.ts` against `@microsoft/office-addin-mock`. This catches the pure-logic mistakes.
+1. **Runs the vitest suite** at `tests/N-{slug}.test.ts` against `office-addin-mock`. This catches the pure-logic mistakes.
 2. **Prints a manual checklist** — 3-5 steps you perform in real Word (Web or Desktop) to confirm host behaviour. You confirm each step yourself; there's no automated gate.
 
 The manual checklist is trust-based. Don't skip it. The whole point of Office.js is that mocks can't tell you whether your add-in *actually works in Word.*

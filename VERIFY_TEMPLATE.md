@@ -4,7 +4,7 @@ Every problem has a `tests/N-{slug}.test.ts` that defines the *automated* half o
 
 ## Why the split
 
-Real Word behaviour — event timing, selection state, content control lifecycle, revision tracking — doesn't reliably reproduce in `@microsoft/office-addin-mock`. Attempting to fully automate would produce false negatives (mock behaviour diverges from Word) or false positives (mock says pass, Word doesn't). Neither is useful.
+Real Word behaviour — event timing, selection state, content control lifecycle, revision tracking — doesn't reliably reproduce in `office-addin-mock`. Attempting to fully automate would produce false negatives (mock behaviour diverges from Word) or false positives (mock says pass, Word doesn't). Neither is useful.
 
 The honest split:
 
@@ -18,7 +18,7 @@ Both must pass. The automated half is machine-gated; the manual half is trust-ga
 ```typescript
 // tests/N-{slug}.test.ts
 import { describe, it, expect, vi } from 'vitest'
-import { OfficeMockObject } from '@microsoft/office-addin-mock'
+import { OfficeMockObject } from 'office-addin-mock'
 import { yourFunction } from '../app/src/taskpane/{slug}'
 
 describe('Problem N: {Title}', () => {
