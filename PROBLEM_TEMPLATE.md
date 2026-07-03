@@ -73,7 +73,7 @@ Read the differences. For each non-cosmetic difference, explain to the agent (in
 ## Notes for the curriculum generator
 
 - **Statement** must be testable — either via the mock (proxy call sequence, argument shape) OR via a specific observable Word behaviour on the manual checklist.
-- **Automated bullets** must be things `@microsoft/office-addin-mock` can actually verify. If a behaviour needs real Word to show up, put it in the manual checklist, not the automated section.
+- **Automated bullets** must be things `office-addin-mock` can actually verify. If a behaviour needs real Word to show up, put it in the manual checklist, not the automated section.
 - **Manual bullets** are trust-based. Keep them concrete and unambiguous — the learner should not have to interpret them.
 - **Hints** are progressive disclosure. Hint 1 points at a doc page; hint 2 names a common mistake; hint 3 sketches shape. Never include a complete implementation.
 - **Reference solution** lives in `solutions/N`. Must pass both the vitest suite and the manual checklist (learner-confirmed on first pass).
